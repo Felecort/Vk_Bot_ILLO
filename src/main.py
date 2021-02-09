@@ -1,16 +1,15 @@
 
 import vk_api
-import time
-# from vk_api.longpoll import VkLongPoll, VkEventType
-# from vk_api.longpoll import VkLongPoll, VkEventType
+from API_key import *
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+import time
 from pprint import pprint
 
 
 # ILLO
 def main():
-    vk_session = vk_api.VkApi(token="d9f3390ee15fb487125b4f7f5cba5e077e8aecd2b021b0d6fc37355028b12b2bf04c6d5fd4cd13e85c9c2")
-    longpoll = VkBotLongPoll(vk_session, group_id=202461859)
+    vk_session = vk_api.VkApi(token=my_token)
+    longpoll = VkBotLongPoll(vk_session, group_id=my_group_id)
     vk = vk_session.get_api()
     print("start")
     for event in longpoll.listen():
