@@ -1,4 +1,5 @@
 
+from generator_sentences import *
 from API_key import *
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
