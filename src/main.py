@@ -1,9 +1,9 @@
 
-import vk_api
 from API_key import *
+import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import time
-from pprint import pprint
+# from pprint import pprint
 
 
 # ILLO
