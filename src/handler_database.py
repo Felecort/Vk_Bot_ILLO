@@ -2,7 +2,9 @@
 from pprint import pprint
 import json
 import re
-data_filename = "../data/database.json"
+import sys
+# data_filename = sys.path[1] + "\\data\\database.json"
+data_filename = "D:\\Projects\\PythonProjects\\Vk_Bot_ILLO\\data\\database.json"
 
 
 def get_database():
@@ -27,9 +29,10 @@ def add_to_dict(new_text, database, chat_id):
         else:
             database[chat_id]["markov_chains"][new_text[i]].append(new_text[i + 1])
     database[chat_id]["markov_chains"][new_text[i + 1]] = [new_text[i + 1]]
+    set_database(database)
     return database
 
 
-data = get_database()
-data = add_to_dict("привет, меня зовут олег, а тебя как зовут Ыгрь", data, 1)
-set_database(data)
+# data = get_database()
+# data = add_to_dict("привет, меня зовут олег, а тебя как зовут Ыгрь", data, 1)
+# set_database(data)
