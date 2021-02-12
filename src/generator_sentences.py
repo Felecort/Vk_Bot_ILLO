@@ -34,6 +34,6 @@ def generate_message(data_dict):
     return gen_msg
 
 
-dict0 = add_dict(text_source, {})
+dict0 = add_dict(text_source, {'я': ['Игнат']})
 gen_msg0 = generate_message(dict0)
 print(gen_msg0)
