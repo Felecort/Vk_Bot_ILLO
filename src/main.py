@@ -15,7 +15,9 @@ def main():
     vk = vk_session.get_api()
     print("start")
     for event in longpoll.listen():
-        if event.type == VkBotEventType.MESSAGE_NEW and isinstance(event.message["text"], str):
+        if event.type == VkBotEventType.MESSAGE_NEW and\
+                isinstance(event.message["text"], str) and\
+                event.message["from_id"] > 0:
             if str(event.chat_id) not in data:
                 data[str(event.chat_id)] = {
                     "config": {
