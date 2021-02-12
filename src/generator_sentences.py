@@ -1,13 +1,7 @@
 
 # Markov chain algorithm
 from random import choice, randint
-from pprint import pprint
-from time import time
 import re
-
-with open("D:/Projects/PythonProjects/Vk_Bot_ILLO/data/test.txt", "r") as file:
-    text_source = file.read()
-    file.close()
 
 
 def add_dict(new_text, data_dict):
@@ -32,8 +26,3 @@ def generate_message(data_dict):
         gen_msg.append(value)
     gen_msg = (' '.join(gen_msg)).capitalize()
     return gen_msg
-
-
-dict0 = add_dict(text_source, {'я': ['Игнат']})
-gen_msg0 = generate_message(dict0)
-print(gen_msg0)
