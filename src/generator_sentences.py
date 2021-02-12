@@ -8,26 +8,32 @@ import re
 with open("D:/Projects/PythonProjects/Vk_Bot_ILLO/data/test.txt", "r") as file:
     text_source = file.read()
     file.close()
-text = re.sub(r"[.,?\n!():—-]", '', text_source).lower().split(" ")
 
 
-test_dict = {}
-i = 0
-for i in range(len(text) - 1):
-    if text[i] not in test_dict:
-        test_dict[text[i]] = [text[i + 1]]
-    else:
-        test_dict[text[i]].append(text[i + 1])
-test_dict[text[i + 1]] = [text[i + 1]]
-
-out = []
-value = choice(list(test_dict.keys()))
-for i in range(randint(7, 20)):
-    if [value] == test_dict[value]:
-        break
-    value = choice(test_dict[value])
-    out.append(value)
+def add_dict(new_text, data_dict):
+    new_text = re.sub(r"[.,?\n!():—-]", '', new_text).lower().split(" ")
+    i = 0
+    for i in range(len(new_text) - 1):
+        if new_text[i] not in data_dict:
+            data_dict[new_text[i]] = [new_text[i + 1]]
+        else:
+            data_dict[new_text[i]].append(new_text[i + 1])
+    data_dict[new_text[i + 1]] = [new_text[i + 1]]
+    return data_dict
 
 
-out = (' '.join(out)).capitalize()
-print(out)
+def generate_message(data_dict):
+    gen_msg = []
+    value = choice(list(data_dict.keys()))
+    for j in range(randint(5, 20)):
+        if [value] == data_dict[value]:
+            break
+        value = choice(data_dict[value])
+        gen_msg.append(value)
+    gen_msg = (' '.join(gen_msg)).capitalize()
+    return gen_msg
+
+
+dict0 = add_dict(text_source, {})
+gen_msg0 = generate_message(dict0)
+print(gen_msg0)
