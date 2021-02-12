@@ -15,25 +15,19 @@ def main():
     vk = vk_session.get_api()
     print("start")
     for event in longpoll.listen():
-        # pprint(event.chat_id + 2000000000)  # ID беседы
-        # pprint(event.message)               # Информация о сообщении
-
-        # print(event.type)
-        # print(VkBotEventType.MESSAGE_NEW)
         if event.type == VkBotEventType.MESSAGE_NEW and isinstance(event.message["text"], str):
             if str(event.chat_id) not in data:
                 data[str(event.chat_id)] = {
-                                            "config": {
-                                                "chance": 20,
-                                                "min": 5,
-                                                "max": 20
-                                            },
-                                            "markov_chains": {}
-                                                    }
+                    "config": {
+                        "chance": 20,
+                        "min": 5,
+                        "max": 20
+                    },
+                    "markov_chains": {}
+                }
                 set_database(data)
-            if len(event.message["text"].split(" ")) > 2:
+            if len(event.message["text"].split(" ")) >= 2:
                 data = add_to_dict(event.message["text"], data, event.chat_id)
-                set_database(data)
             if event.message["text"] == "gen":
                 message = generate_message(data[str(event.chat_id)]["markov_chains"])
                 if event.from_chat:  # Если написали в Беседе
@@ -42,8 +36,6 @@ def main():
                         message=message,
                         random_id=time.time()
                     )
-                # elif event.from_user:     # Если написали в ЛС
-                #     pass
 
 
 if __name__ == "__main__":
