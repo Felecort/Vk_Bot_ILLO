@@ -2,16 +2,16 @@
 from random import choice, randint
 
 
-def generate_message(data_dict):
+def generate_message(data_dict, chat_id):
     gen_msg = []
-    value = choice(list(data_dict.keys()))
+    value = choice(list(data_dict[chat_id]["markov_chains"].keys()))
     # print(value)
     for j in range(randint(3, 10)):
-        if [value] == data_dict[value]:
+        if [value] == data_dict[chat_id]["markov_chains"][value]:
             if len(gen_msg) < 2:
                 gen_msg.append(value)
             break
-        value = choice(data_dict[value])
+        value = choice(data_dict[chat_id]["markov_chains"][value])
         gen_msg.append(value)
     gen_msg = (' '.join(gen_msg)).capitalize() + " "
     return gen_msg

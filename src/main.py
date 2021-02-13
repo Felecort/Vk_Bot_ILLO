@@ -30,9 +30,9 @@ def main():
                     }
                     set_database(data)
                 if len(event.message["text"].split(" ")) >= 2:
-                    data = add_to_dict(event.message["text"], data, event.chat_id)
+                    data = add_to_dict(event.message["text"], data, str(event.chat_id))
                 if event.message["text"] == "gen":
-                    message = generate_message(data[str(event.chat_id)]["markov_chains"])
+                    message = generate_message(data, str(event.chat_id))
                     if event.from_chat:  # Если написали в Беседе
                         vk.messages.send(  # Отправляем собщение
                             chat_id=event.chat_id,
