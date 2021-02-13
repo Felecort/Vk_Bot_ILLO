@@ -15,29 +15,32 @@ def main():
     vk = vk_session.get_api()
     print("start")
     for event in longpoll.listen():
-        if event.type == VkBotEventType.MESSAGE_NEW and\
-                isinstance(event.message["text"], str) and\
-                event.message["from_id"] > 0:
-            if str(event.chat_id) not in data:
-                data[str(event.chat_id)] = {
-                    "config": {
-                        "chance": 20,
-                        "min": 5,
-                        "max": 20
-                    },
-                    "markov_chains": {}
-                }
-                set_database(data)
-            if len(event.message["text"].split(" ")) >= 2:
-                data = add_to_dict(event.message["text"], data, event.chat_id)
-            if event.message["text"] == "gen":
-                message = generate_message(data[str(event.chat_id)]["markov_chains"])
-                if event.from_chat:  # Если написали в Беседе
-                    vk.messages.send(  # Отправляем собщение
-                        chat_id=event.chat_id,
-                        message=message,
-                        random_id=time.time()
-                    )
+        try:
+            if event.type == VkBotEventType.MESSAGE_NEW and\
+                    isinstance(event.message["text"], str) and\
+                    event.message["from_id"] > 0:
+                if str(event.chat_id) not in data:
+                    data[str(event.chat_id)] = {
+                        "config": {
+                            "chance": 20,
+                            "min": 5,
+                            "max": 20
+                        },
+                        "markov_chains": {}
+                    }
+                    set_database(data)
+                if len(event.message["text"].split(" ")) >= 2:
+                    data = add_to_dict(event.message["text"], data, event.chat_id)
+                if event.message["text"] == "gen":
+                    message = generate_message(data[str(event.chat_id)]["markov_chains"])
+                    if event.from_chat:  # Если написали в Беседе
+                        vk.messages.send(  # Отправляем собщение
+                            chat_id=event.chat_id,
+                            message=message,
+                            random_id=time.time()
+                        )
+        except Exception as error:
+            print(error)
 
 
 if __name__ == "__main__":
