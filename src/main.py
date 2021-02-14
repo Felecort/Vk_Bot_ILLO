@@ -2,10 +2,10 @@
 from generator_sentences import *
 from handler_database import *
 from API_key import *
+from datetime import datetime
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import vk_api
 import time
-from datetime import datetime
 
 
 # ILLO
@@ -31,21 +31,23 @@ def main():
                         "markov_chains": {}
                     }
                     set_database(data)
-                if len(event.message["text"].split(" ")) >= 3:
-                    data = add_to_dict(event.message["text"], data, str(event.chat_id))
-                    if time.time() - start_time > 10:
+                msg_array = "".join(c for c in event.message["text"] if c.isalpha() or c == " " or c.isdigit()).lower().split()
+                if len(msg_array) >= 3:
+                    data = add_to_dict(msg_array, data, str(event.chat_id))
+                    if time.time() - start_time > 20:
                         start_time = time.time()
                         set_database(data)
                 if event.message["text"] == "gen":
                     message = generate_message(data, str(event.chat_id))
-                    if event.from_chat:  # Если написали в Беседе
-                        vk.messages.send(  # Отправляем собщение
+                    if event.from_chat:
+                        vk.messages.send(
                             chat_id=event.chat_id,
                             message=message,
                             random_id=time.time()
                         )
         except Exception as error:
             log_error = open(log_error_name, "a")
+            print("error")
             print("\n\n---------------------------",    file=log_error)
             print("time:\n",        datetime.now(),     file=log_error)
             print("error name:\n",  error,              file=log_error)
