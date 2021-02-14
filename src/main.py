@@ -14,6 +14,7 @@ def main():
     longpoll = VkBotLongPoll(vk_session, group_id=my_group_id)
     vk = vk_session.get_api()
     print("start")
+    start_time = time.time()
     for event in longpoll.listen():
         try:
             if event.type == VkBotEventType.MESSAGE_NEW and\
@@ -31,6 +32,9 @@ def main():
                     set_database(data)
                 if len(event.message["text"].split(" ")) >= 2:
                     data = add_to_dict(event.message["text"], data, str(event.chat_id))
+                    if time.time() - start_time > 20:
+                        start_time = time.time()
+                        set_database(data)
                 if event.message["text"] == "gen":
                     message = generate_message(data, str(event.chat_id))
                     if event.from_chat:  # Если написали в Беседе
@@ -40,7 +44,9 @@ def main():
                             random_id=time.time()
                         )
         except Exception as error:
+            print(time.time())
             print(error)
+            print(event)
 
 
 if __name__ == "__main__":
