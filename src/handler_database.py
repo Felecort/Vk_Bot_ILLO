@@ -1,5 +1,6 @@
 from random import choice, randint
 import json
+import time
 # data_filename = "D:\\Projects\\PythonProjects\\Vk_Bot_ILLO\\data\\database.json"
 data_filename = "data\\database.json"
 
@@ -11,11 +12,13 @@ def get_database():
 
 
 def set_database(database):
+    print("data update")
     with open(data_filename, "w") as file:
-        json.dump(database, file, ensure_ascii=False)
+        json.dump(database, file, ensure_ascii=False, indent=4)
 
 
 def add_to_dict(new_text, database, chat_id):
+
     new_text = "".join(c for c in new_text if c.isalpha() or c == " " or c.isdigit()).lower().split()
     i = 0
     for i in range(len(new_text) - 1):
@@ -25,7 +28,6 @@ def add_to_dict(new_text, database, chat_id):
             database[chat_id]["markov_chains"][new_text[i]].append(new_text[i + 1])
     if new_text[i + 1] not in database[chat_id]["markov_chains"]:
         database[chat_id]["markov_chains"][new_text[i + 1]] = [new_text[i // 2]]
-    set_database(database)
     return database
 
 
