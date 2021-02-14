@@ -2,8 +2,9 @@ from random import choice, randint
 import json
 import time
 data_filename = "D:\\Projects\\PythonProjects\\Vk_Bot_ILLO\\data\\database.json"
-# data_filename = "data\\database.json"
-# data_filename = "./data/database.json" # hosting
+log_error_name = "D:\\Projects\\PythonProjects\\Vk_Bot_ILLO\\data\\error.log"
+# data_filename = "./data/database.json"    # hosting
+# log_error_name = "./data/error.log"       # hosting
 
 
 def get_database():

@@ -5,6 +5,7 @@ from API_key import *
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import vk_api
 import time
+from datetime import datetime
 
 
 # ILLO
@@ -30,9 +31,9 @@ def main():
                         "markov_chains": {}
                     }
                     set_database(data)
-                if len(event.message["text"].split(" ")) >= 2:
+                if len(event.message["text"].split(" ")) >= 3:
                     data = add_to_dict(event.message["text"], data, str(event.chat_id))
-                    if time.time() - start_time > 20:
+                    if time.time() - start_time > 10:
                         start_time = time.time()
                         set_database(data)
                 if event.message["text"] == "gen":
@@ -44,9 +45,12 @@ def main():
                             random_id=time.time()
                         )
         except Exception as error:
-            print(time.time())
-            print(error)
-            print(event)
+            log_error = open(log_error_name, "a")
+            print("\n\n---------------------------",    file=log_error)
+            print("time:\n",        datetime.now(),     file=log_error)
+            print("error name:\n",  error,              file=log_error)
+            print("event data:\n",  event,              file=log_error)
+            log_error.close()
 
 
 if __name__ == "__main__":
