@@ -7,7 +7,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import vk_api
 import time
 
-
+#
 # ILLO
 def main():
     data = get_database()
